@@ -1,6 +1,9 @@
 --Initialise Peripherals
 local mon = peripheral.find("monitor")
 if not mon then error("Monitor not found") end
+mon.setTextScale(0.5)
+mon.clear()
+mon.setCursorPos(1, 1)
 
 local chat = peripheral.find("chat_box")
 if not chat then error("Chatbox not found") end
@@ -75,31 +78,39 @@ local function cleanupOldLogs()
   end
 end
 
+local function printLine(line)
+    local x, y = mon.getCursorPos()
+    mon.write(line)
+    mon.setCursorPos(x, y + 1)
+end
+
 ---sets Weather/Time
 ---@param state string
 ---@param as string
 local function setState(state, as)
-    if state == "Day" then
+    if state == "day" then
         rs.setBundledOutput("back", colors.yellow)
-        mon.write(as.. " changed Time to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-        logLine(as.. " changed Time to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-    elseif state == "Night" then
+        printLine(as.. " changed Time to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+        logLine(as.. " changed Time to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+    elseif state == "night" then
         rs.setBundledOutput("back", colors.black)
-        mon.write(as.. " changed Time to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-        logLine(as.. " changed Time to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-    elseif state == "Rain" then
+        printLine(as.. " changed Time to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+        logLine(as.. " changed Time to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+    elseif state == "rain" then
         rs.setBundledOutput("back", colors.cyan)
-        mon.write(as.. " changed Weather to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-        logLine(as.. " changed Weather to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-    elseif state == "Thunder" then
+        printLine(as.. " changed Weather to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+        logLine(as.. " changed Weather to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+    elseif state == "thunder" then
         rs.setBundledOutput("back", colors.blue)
-        mon.write(as.. " changed Weather to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-        logLine(as.. " changed Weather to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-    elseif state == "Clear" then
+        printLine(as.. " changed Weather to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+        logLine(as.. " changed Weather to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+    elseif state == "clear" then
         rs.setBundledOutput("back", colors.white)
-        mon.write(as.. " changed Weather to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
-        logLine(as.. " changed Weather to " ..state.. " at" ..os.time("utc").. " UTC on day" ..os.day("ingame"))
+        printLine(as.. " changed Weather to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
+        logLine(as.. " changed Weather to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
     end
+    os.sleep(0.5)
+    rs.setBundledOutput("back", colors.green)
 end
 
 ---looks for accepted command
