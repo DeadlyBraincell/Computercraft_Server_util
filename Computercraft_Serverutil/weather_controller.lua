@@ -243,7 +243,7 @@ end
 ---sets Time to given state
 ---@param state string
 ---@param as string
-local function setTime(state, as)
+local function setTime(state, as) 
 	if state == "day" then
         rs.setBundledOutput(config.timeConfig.day.side, config.timeConfig.day.col)
         printLine(as.. " changed Time to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
