@@ -122,11 +122,10 @@ end
 ---@return boolean
 ---@return table | nil
 local function findCommand(text)
-	text = ""
 	local tab = listWords(text)
 	if tab[2] == "set" and IsInTable(tab[1], triggers) and IsInTable(tab[3], argumens) then
 		local command = {
-			trigger = tab[2],
+			trigger = tab[1],
 			state = tab[3]
 		}
 		return true, command
@@ -222,9 +221,10 @@ end
 
 --Main Code--
 
----Sets weather
----@param state any
-local function setWeather(state)
+---sets Weather to given state
+---@param state string
+---@param as string
+local function setWeather(state, as)
 	if state == "rain" then
 	    rs.setBundledOutput(config.weatherConfig.rain.side, config.weatherConfig.rain.col)
         printLine(as.. " changed Weather to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
@@ -240,7 +240,10 @@ local function setWeather(state)
     end
 end
 
-local function setTime(state)
+---sets Time to given state
+---@param state string
+---@param as string
+local function setTime(state, as)
 	if state == "day" then
         rs.setBundledOutput(config.timeConfig.day.side, config.timeConfig.day.col)
         printLine(as.. " changed Time to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
@@ -263,9 +266,9 @@ local function main()
 		sendFeedback(username, isCommand, message)
         if isHidden and event and isCommand then
 			if command.trigger == "weather" then
-				setWeather(command.state)
+				setWeather(command.state, username)
 			elseif command.trigger == "time" then
-				setTime(command.state)
+				setTime(command.state, username)
 			end
         end
         os.sleep(1)
