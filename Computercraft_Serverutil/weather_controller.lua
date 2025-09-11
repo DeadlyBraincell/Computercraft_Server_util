@@ -62,7 +62,7 @@ local config = {
 	},
 	resetConfig = { --set to any combination not used yet
 		reset = {
-			side = "down",
+			side = "back",
 			col = colors.green
 		}
 	}
@@ -298,9 +298,9 @@ local function main()
 			elseif command.trigger == "time" then
 				setTime(command.state, username)
 			end
+			os.sleep(0.5)
 			rs.setBundledOutput(config.resetConfig.reset.side, config.resetConfig.reset.col)
         end
-        os.sleep(1)
     end
 end
 
