@@ -59,6 +59,12 @@ local config = {
 			side = "back",
 			col = colors.yellow
 		}
+	},
+	resetConfig = { --set to any combination not used yet
+		reset = {
+			side = "down",
+			col = colors.green
+		}
 	}
 }
 
@@ -131,6 +137,25 @@ local function findCommand(text)
 		return true, command
 	else
 		return false, nil
+	end
+end
+
+local function validate(event, username, message, uuid, isHidden)
+	if event == nil then
+		error("Event is nil")
+		print(tostring(event))
+	elseif username == nil then
+		error("username is nil")
+		print(tostring(username))
+	elseif message == nil then
+		error("message is nil")
+		print(tostring(message))
+	elseif uuid == nil then
+		error("uuid is nil")
+		print(tostring(uuid))
+	elseif isHidden == nil then
+		error("isHidden is nil")
+		print(tostring(isHidden))
 	end
 end
 
@@ -243,7 +268,7 @@ end
 ---sets Time to given state
 ---@param state string
 ---@param as string
-local function setTime(state, as) 
+local function setTime(state, as)
 	if state == "day" then
         rs.setBundledOutput(config.timeConfig.day.side, config.timeConfig.day.col)
         printLine(as.. " changed Time to " ..state.. " at " ..os.time("utc").. " UTC on day " ..os.day("ingame"))
@@ -262,14 +287,18 @@ local function main()
 	end
     while true do
         local event, username, message, uuid, isHidden = os.pullEvent("chat")
+		validate(event, username, message, uuid, isHidden)
         local isCommand, command = findCommand(message)
-		sendFeedback(username, isCommand, message)
+		if isHidden then
+			sendFeedback(username, isCommand, message)
+		end
         if isHidden and event and isCommand then
 			if command.trigger == "weather" then
 				setWeather(command.state, username)
 			elseif command.trigger == "time" then
 				setTime(command.state, username)
 			end
+			rs.setBundledOutput(config.resetConfig.reset.side, config.resetConfig.reset.col)
         end
         os.sleep(1)
     end
