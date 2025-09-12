@@ -10,11 +10,11 @@
     for weather: rain, thunder, clear
     for time: day, night
   ## Full List
-  `$time set day`\
-  `$time set night`\
-  `$weather set rain`\
-  `$weather set thunder`\
-  `$weather set clear`
+  `$time set day`(added)\
+  `$time set night`(added)\
+  `$weather set rain`(added)\
+  `$weather set thunder`(added)\
+  `$weather set clear`(added)\
 
 # Bugs
 There are currently no known bugs.\
