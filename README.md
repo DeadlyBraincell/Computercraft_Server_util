@@ -14,7 +14,7 @@
   `$time set night`(added)\
   `$weather set rain`(added)\
   `$weather set thunder`(added)\
-  `$weather set clear`(added)\
+  `$weather set clear`(added)
 
 # Bugs
 There are currently no known bugs.\
