@@ -27,7 +27,8 @@ local argumens = {
 }
 local triggers = {
 	"time",
-	"weather"
+	"weather",
+	"link"
 }
 
 --Redstone
@@ -129,7 +130,7 @@ end
 ---@return table | nil
 local function findCommand(text)
 	local tab = listWords(text)
-	if tab[2] == "set" and IsInTable(tab[1], triggers) and IsInTable(tab[3], argumens) then
+	if IsInTable(tab[1], triggers) and tab[2] == "set" | "send" and IsInTable(tab[3], argumens) then
 		local command = {
 			trigger = tab[1],
 			state = tab[3]
@@ -280,6 +281,22 @@ local function setTime(state, as)
 	end
 end
 
+local function sendLinkToChat(link)
+	local message = {
+		{
+				text = link,
+				underlined = true,
+				color = "red",
+				clickEvent = {
+					action = "open_url",
+					value = link
+				}
+			}
+	}
+	local json = textutils.serialiseJSON(message)
+	chat.sendFormattedMessage(json, "&4&lLinkHandler", "[]", "&4&l")
+end
+
 
 local function main()
 	if checkForConflicts(config) then
@@ -297,6 +314,8 @@ local function main()
 				setWeather(command.state, username)
 			elseif command.trigger == "time" then
 				setTime(command.state, username)
+			elseif command.trigger == "link" then
+				sendLinkToChat(command.state)
 			end
 			os.sleep(0.5)
 			rs.setBundledOutput(config.resetConfig.reset.side, config.resetConfig.reset.col)
