@@ -125,8 +125,8 @@ local function listWords(text)
 end
 
 local function isURL(str)
-	local isURL = str:sub(1, 8) == "https://" or str:sub(1, 7) == "http://"
-	return isURL
+	local URL = str:sub(1, 8) == "https://" or str:sub(1, 7) == "http://"
+	return URL
 end
 
 ---looks if valid commnd-structure is present
@@ -290,7 +290,7 @@ end
 local function sendLinkToChat(link)
 	local message = {
 		{
-				text = link,
+				text = "Here",
 				underlined = true,
 				color = "red",
 				clickEvent = {
@@ -321,6 +321,7 @@ local function main()
 			elseif command.trigger == "time" then
 				setTime(command.state, username)
 			elseif command.trigger == "link" then
+				os.sleep(0.5)
 				sendLinkToChat(command.state)
 			end
 			os.sleep(0.5)
