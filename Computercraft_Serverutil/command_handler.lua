@@ -124,13 +124,19 @@ local function listWords(text)
 	return words
 end
 
+local function isURL(str)
+	local isURL = str:sub(1, 8) == "https://" or str:sub(1, 7) == "http://"
+	return isURL
+end
+
 ---looks if valid commnd-structure is present
 ---@param text string
 ---@return boolean
 ---@return table | nil
 local function findCommand(text)
 	local tab = listWords(text)
-	if IsInTable(tab[1], triggers) and tab[2] == "set" | "send" and IsInTable(tab[3], argumens) then
+
+	if IsInTable(tab[1], triggers) and tab[2] == "set" or "send" and IsInTable(tab[3], argumens) or isURL(tab[3]) then
 		local command = {
 			trigger = tab[1],
 			state = tab[3]
