@@ -124,13 +124,19 @@ local function listWords(text)
 	return words
 end
 
+local function isURL(str)
+	local isURL = str:sub(1, 8) == "https://" or str:sub(1, 7) == "http://"
+	return isURL
+end
+
 ---looks if valid commnd-structure is present
 ---@param text string
 ---@return boolean
 ---@return table | nil
 local function findCommand(text)
 	local tab = listWords(text)
-	if IsInTable(tab[1], triggers) and tab[2] == "set" | "send" and IsInTable(tab[3], argumens) then
+
+	if IsInTable(tab[1], triggers) and tab[2] == "set" or "send" and IsInTable(tab[3], argumens) or isURL(tab[3]) then
 		local command = {
 			trigger = tab[1],
 			state = tab[3]
@@ -223,7 +229,7 @@ end
 
 local function sendFeedback(player,success, command)
 	if success then
-		chat.sendMessageToPlayer("Your command \""..command.."\" has been recieved and will be processed shortly.", player, "&4&lGod of Weather", "[]","&4&l")
+		chat.sendMessageToPlayer("Your command \""..command.."\" has been recieved and will be processed shortly.", player, "&4&lCommand Handler", "[]","&4&l")
 	else
 		local message = {
 			{text = "Your command \""..command.."\" was not recognised. Please check for any mistakes. If you think that this is a mistake.\n"},
@@ -294,7 +300,7 @@ local function sendLinkToChat(link)
 			}
 	}
 	local json = textutils.serialiseJSON(message)
-	chat.sendFormattedMessage(json, "&4&lLinkHandler", "[]", "&4&l")
+	chat.sendFormattedMessage(json, "&4&lLink Handler", "[]", "&4&l")
 end
 
 
