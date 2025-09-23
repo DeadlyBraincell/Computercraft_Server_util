@@ -229,7 +229,7 @@ end
 
 local function sendFeedback(player,success, command)
 	if success then
-		chat.sendMessageToPlayer("Your command \""..command.."\" has been recieved and will be processed shortly.", player, "&4&lGod of Weather", "[]","&4&l")
+		chat.sendMessageToPlayer("Your command \""..command.."\" has been recieved and will be processed shortly.", player, "&4&lCommand Handler", "[]","&4&l")
 	else
 		local message = {
 			{text = "Your command \""..command.."\" was not recognised. Please check for any mistakes. If you think that this is a mistake.\n"},
@@ -300,7 +300,7 @@ local function sendLinkToChat(link)
 			}
 	}
 	local json = textutils.serialiseJSON(message)
-	chat.sendFormattedMessage(json, "&4&lLinkHandler", "[]", "&4&l")
+	chat.sendFormattedMessage(json, "&4&lLink Handler", "[]", "&4&l")
 end
 
 
