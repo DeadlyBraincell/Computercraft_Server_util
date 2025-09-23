@@ -12,7 +12,7 @@ local function generateMessage(player)
 		{text = "Welcome back " ..player.. ".\n"},
 		{text = "On this Server we have  varius commands every player can access\n"},
 		{text = "This is made possible using Computercraft and Advanced Peripherals\n"},
-		{text = "U can find a list of all currently available and planned commands as well as instructions on how to implement this in your world"},
+		{text = "U can find a list of all currently available and planned commands as well as instructions on how to implement this in your world "},
 		{
 			text = "here",
 			underlined = true,
