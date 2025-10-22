@@ -8,8 +8,8 @@ if not playerD then error("player Detector not found") end
 
 --Util--
 local function generateMessage(player)
-	local joinMessage = {
-		{text = "Welcome back " ..player.. ".\n"},
+	local joinMessageCC = {
+		{text = "\nWelcome back " ..player.. ".\n"},
 		{text = "On this Server we have  varius commands every player can access\n"},
 		{text = "This is made possible using Computercraft and Advanced Peripherals\n"},
 		{text = "U can find a list of all currently available and planned commands as well as instructions on how to implement this in your world "},
@@ -23,9 +23,63 @@ local function generateMessage(player)
 			}
 		},
 		{".\n"},
-		{text = "U can also add suggestions on what commands i should implement next"}
+		{text = "U can also add suggestions on what commands i should implement next"},
+		{text = "Also here is a list of all server-side commands\n"},
 	}
-	return textutils.serialiseJSON(joinMessage)
+	local joinMessageServer = {
+		{text = "\n"},
+		{
+			text = "/rtp",
+			underlined = true,
+			color = "red",
+			clickEvent = {
+				action = "suggest_command",
+				value = "/rtp"
+			}
+		},
+		{text = ": randomly teleport yourself in the dimension you are currently in.\n"},
+		{
+			text = "/sethome",
+			underlined = true,
+			color = "red",
+			clickEvent = {
+				action = "suggest_command",
+				value = "/sethome"
+			}
+		},
+		{text = ": set a home you can at all time teleport back using "},
+		{
+			text = "/home",
+			underlined = true,
+			color = "red",
+			clickEvent = {
+				action = "suggest_command",
+				value = "/home"
+			}
+		},
+		{".\n"},
+		{
+			text = "/spawn",
+			underlined = true,
+			color = "red",
+			clickEvent = {
+				action = "suggest_command",
+				value = "/spawn"
+			}
+		},
+		{text = ": teleports you to the world spawn.\n"},
+		{
+			text = "/warp",
+			underlined = true,
+			color = "red",
+			clickEvent = {
+				action = "suggest_command",
+				value = "/warp"
+			}
+		},
+		{text = ": lets you teleport yourself to a predefined warp point."}
+	}
+	return {textutils.serialiseJSON(joinMessageCC), textutils.serializeJSON(joinMessageServer)}
 end
 
 
@@ -36,8 +90,10 @@ local function main()
 	while true do
 		local event, username, dimension = os.pullEvent("playerJoin")
 		if event then
-			local message = generateMessage(username)
-			chat.sendFormattedMessageToPlayer(message, username, "&4&lJoin message", "[]", "&4&l")
+			local messages = generateMessage(username)
+			chat.sendFormattedMessageToPlayer(messages[1], username, "Join message", "[]", "&4&l")
+			os.sleep(0.5)
+			chat.sendFormattedMessageToPlayer(messages[2], username, "", "", "")
 		end
 	end
 end

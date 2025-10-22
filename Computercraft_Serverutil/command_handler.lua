@@ -124,10 +124,10 @@ local function listWords(text)
 	return words
 end
 
-local function isURL(str)
-	local URL = str:sub(1, 8) == "https://" or str:sub(1, 7) == "http://"
-	return URL
-end
+-- local function isURL(str)
+-- 	local URL = str:sub(1, 8) == "https://" or str:sub(1, 7) == "http://"
+-- 	return URL
+-- end
 
 ---looks if valid commnd-structure is present
 ---@param text string
@@ -136,7 +136,7 @@ end
 local function findCommand(text)
 	local tab = listWords(text)
 
-	if IsInTable(tab[1], triggers) and tab[2] == "set" or "send" and IsInTable(tab[3], argumens) or isURL(tab[3]) then
+	if IsInTable(tab[1], triggers) and tab[2] == "set" and IsInTable(tab[3], argumens) then
 		local command = {
 			trigger = tab[1],
 			state = tab[3]
@@ -287,21 +287,21 @@ local function setTime(state, as)
 	end
 end
 
-local function sendLinkToChat(link)
-	local message = {
-		{
-				text = "Here",
-				underlined = true,
-				color = "red",
-				clickEvent = {
-					action = "open_url",
-					value = link
-				}
-			}
-	}
-	local json = textutils.serialiseJSON(message)
-	chat.sendFormattedMessage(json, "&4&lLink Handler", "[]", "&4&l")
-end
+-- local function sendLinkToChat(link)
+-- 	local message = {
+-- 		{
+-- 				text = "Here",
+-- 				underlined = true,
+-- 				color = "red",
+-- 				clickEvent = {
+-- 					action = "open_url",
+-- 					value = link
+-- 				}
+-- 			}
+-- 	}
+-- 	local json = textutils.serialiseJSON(message)
+-- 	chat.sendFormattedMessage(json, "&4&lLink Handler", "[]", "&4&l")
+-- end
 
 
 local function main()
@@ -320,9 +320,9 @@ local function main()
 				setWeather(command.state, username)
 			elseif command.trigger == "time" then
 				setTime(command.state, username)
-			elseif command.trigger == "link" then
-				os.sleep(0.5)
-				sendLinkToChat(command.state)
+			-- elseif command.trigger == "link" then
+			-- 	os.sleep(0.5)
+			-- 	sendLinkToChat(command.state)
 			end
 			os.sleep(0.5)
 			rs.setBundledOutput(config.resetConfig.reset.side, config.resetConfig.reset.col)
