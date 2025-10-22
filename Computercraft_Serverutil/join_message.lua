@@ -93,7 +93,7 @@ local function main()
 			local messages = generateMessage(username)
 			chat.sendFormattedMessageToPlayer(messages[1], username, "Join message", "[]", "&4&l")
 			os.sleep(0.5)
-			chat.sendFormattedMessageToPlayer(messages[2], username, "", "", "")
+			chat.sendFormattedMessageToPlayer(messages[2], username, "Server Commands", "[]", "&4&l")
 		end
 	end
 end
